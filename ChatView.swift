@@ -34,7 +34,7 @@ struct ChatView: View {
             Constants.Background.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("JakeBot")
+                    Text("Jakey")
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.white)
@@ -61,7 +61,7 @@ struct ChatView: View {
                                 
                                 Text(message)
                                     .padding()
-                                    .background(.gray.opacity(0.8))
+                                    .background(.gray.opacity(0.9))
                                     .cornerRadius(10)
                                     .padding(.horizontal,16)
                                     .padding(.bottom,10)

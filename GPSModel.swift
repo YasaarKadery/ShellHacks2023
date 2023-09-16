@@ -88,7 +88,7 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         // Calculate acceleration (change in speed over time)
         let acceleration = deltaSpeed / timeInterval
-        print(acceleration)
+
         return acceleration
     }
     
@@ -117,7 +117,7 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func checkIfLocationServicesIsEnabled() {
         
         locationManager = CLLocationManager()
-        locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager!.delegate = self
 
         

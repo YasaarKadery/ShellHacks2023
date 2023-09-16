@@ -14,6 +14,8 @@ struct Constants {
     static let TextWhite: Color = .white
     static let Background: Color = Color(red: 0.1, green: 0.11, blue: 0.12)
     static let SubheadingWhitishBlue: Color = Color(red: 0.82, green: 0.91, blue: 1)
+    static let ContainerIconBluish: Color = Color(red: 0.23, green: 0.41, blue: 0.58)
+
     static let Primary: Color = Color(red: 0, green: 0.52, blue: 1)
     static let linearGradientBackground: LinearGradient = LinearGradient(
         stops: [

@@ -5,7 +5,6 @@
 //  Created by Yasaar Kadery on 9/16/23.
 //
 
-import SwiftUI
 
 import SwiftUI
 import MapKit
@@ -29,23 +28,23 @@ struct ShowSpeedView: View {
         
         VStack {
             Map(coordinateRegion: .constant(gpsModel.region), showsUserLocation: true)
-                            .frame(height: 300) // Set the height of the map
-                            .cornerRadius(16) // Add rounded corners
+                            .frame(height: 300)
+                            .cornerRadius(16)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.blue, lineWidth: 2) // Add a border
+                                    .stroke(Color.blue, lineWidth: 2)
                             )
-                            .padding(.horizontal) // Add horizontal padding
+                            .padding(.horizontal)
             
             Text("Speed:")
-                .font(.title)
+                .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(Color.white)
             
             Text("\(Int(gpsModel.averageSpeed)) MPH")
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundColor(.green) // Change text color
+                .foregroundColor(.green)
         }
         .alert("Slow down", isPresented: $gpsModel.shouldSlowDown) {
             Button("OK", role: .cancel) { }
@@ -56,7 +55,7 @@ struct ShowSpeedView: View {
     }
 }
 
-struct SpeedLimitView_Previews: PreviewProvider {
+struct SpeedView_Previews: PreviewProvider {
     static var previews: some View {
         SpeedView()
     }
