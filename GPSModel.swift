@@ -88,7 +88,7 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         // Calculate acceleration (change in speed over time)
         let acceleration = deltaSpeed / timeInterval
-
+        print(acceleration)
         return acceleration
     }
     

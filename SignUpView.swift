@@ -42,6 +42,7 @@ struct SignUpView: View {
                  TODO: SUBMIT POST REQUEST TO SIGN UP SERVER WHEN HITTING CREATE ACCOUNT
                  */
                 NavigationLink {
+                    ChatView()
                     // todo: add dashboard
                 }label: {
                     CreateAccountButton()
