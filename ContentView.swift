@@ -17,7 +17,7 @@ struct ContentView: View {
 
 struct LaunchSubTextView: View {
     var body: some View {
-        Text("Drive safer, understand better! NaviGuardian helps you improve your driving while demystifying car insurance for you.")
+        Text("Drive safer, understand better! NaviGuardian helps you improve your driving while demyNstifying car insurance for you.")
           .font(Font.custom("Rubik", size: 16))
           .kerning(1)
           .foregroundColor(Constants.SubheadingWhitishBlue)
@@ -94,7 +94,7 @@ struct LaunchTextView: View {
             Text("NaviGuardian!")
                 .font(Font.custom("Rubik", size: 48).weight(.medium))
                 .kerning(0.6)
-                .foregroundColor(.blue) // Change 'yourColor' to the desired color
+                .foregroundColor(.blue)
         }.frame(width: 387, height: 136, alignment: .center)
     }
 }
