@@ -53,7 +53,7 @@ struct LaunchView: View {
                     LaunchSubTextView()
                     Spacer()
                     NavigationLink {
-//                        StaySafeView()
+                        StaySafeView()
                     }label: {
                         StartJourneyButton()
                     }
