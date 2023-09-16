@@ -1,8 +1,8 @@
 //
-//  GPSModel.swift
-//  ShellHacks2023
+//  ContentViewModel.swift
+//  SwiftUI-MapKit
 //
-//  Created by Yasaar Kadery on 9/16/23.
+//  Created by Yasaar Kadery on 9/12/23.
 //
 
 import MapKit
@@ -17,12 +17,14 @@ enum MapDetails {
 final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     
-    
     @Published var region = MKCoordinateRegion(center: MapDetails.startingLocation, span: MapDetails.defaultSpan)
-    @Published var averageSpeed: CLLocationSpeed = 0.0
     
+    
+    
+    @Published var averageSpeed: CLLocationSpeed = 0.0
+    @Published var shouldSlowDown: Bool = false
     private var previousLocation: CLLocation?
-    // function that gets periodically called to update the model with new GPS data
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
             guard let newLocation = locations.last else { return }
@@ -30,19 +32,35 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             // Update the region and average speed
             region = MKCoordinateRegion(center: newLocation.coordinate, span: MapDetails.defaultSpan)
             updateAverageSpeed(newLocation: newLocation)
+            guard let previousLocation = self.previousLocation else {
+                self.previousLocation = newLocation
+                return
+            }
+
+            // Calculate acceleration using the calculateAcceleration function
+            let acceleration = calculateAcceleration(newLocation: newLocation, previousLocation: previousLocation)
+
+            // Call the detectHardBrake method with acceleration
+            detectHardBrake(acceleration: acceleration)
+
+            // Update previousLocation for the next calculation
+            self.previousLocation = newLocation
         }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // handle any location errors
         if let locationError = error as? CLError {
             switch locationError.code {
             case .locationUnknown:
+                // Handle location being unknown or unavailable
                 print("Location is unknown or unavailable.")
             case .denied:
+                // Handle location services being denied by the user
                 print("Location services are denied. Please enable them in settings.")
             case .headingFailure:
+                // Handle issues with the compass or heading updates
                 print("Heading updates are not available.")
             default:
+                // Handle other location-related errors
                 print("Location error: \(locationError.localizedDescription)")
             }
         } else {
@@ -50,7 +68,29 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("Non-Core Location error: \(error.localizedDescription)")
         }
     }
+    func detectHardBrake(acceleration: CLLocationSpeed) {
+        // Define a threshold for hard brakes (you can adjust this value)
+        let hardBrakeThreshold: CLLocationSpeed = -5.0 // m/s^2
 
+        if acceleration < hardBrakeThreshold {
+            // A negative acceleration greater than the threshold indicates a hard brake
+            self.shouldSlowDown.toggle()
+        }
+
+    }
+    
+    func calculateAcceleration(newLocation: CLLocation, previousLocation: CLLocation) -> CLLocationSpeed {
+        // Calculate time interval between previous and new location
+        let timeInterval = newLocation.timestamp.timeIntervalSince(previousLocation.timestamp)
+
+        // Calculate change in speed
+        let deltaSpeed = newLocation.speed - previousLocation.speed
+
+        // Calculate acceleration (change in speed over time)
+        let acceleration = deltaSpeed / timeInterval
+
+        return acceleration
+    }
     
     // Method to calculate and update average speed
     private func updateAverageSpeed(newLocation: CLLocation) {
@@ -58,9 +98,14 @@ final class GPSModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.previousLocation = newLocation
             return
         }
-    
+        
+        // Calculate time interval between previous and new location
         let timeInterval = newLocation.timestamp.timeIntervalSince(previousLocation.timestamp)
+        
+        // Calculate distance traveled between previous and new location
         let distance = newLocation.distance(from: previousLocation)
+        
+        // Calculate average speed
         let speed = distance / timeInterval
         
         // Update the averageSpeed property and convert from m/s to mph
