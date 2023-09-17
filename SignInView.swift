@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
-
-struct SignUpView: View {
-    @State private var fullname: String = ""
-    @State private var confirmPassword: String = ""
+func doNothing() {
+    print("doing nothing")
+}
+struct SignInView: View {
+    @State private var firstname: String = ""
+    @State private var lastname: String = ""
     @State private var email: String  = ""
     @State private var password: String = ""
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -23,47 +24,39 @@ struct SignUpView: View {
                           title: "Email address",
                           placeHolder: "name@example.com")
                 .autocapitalization(.none)
-                InputView(text: $fullname,
-                          title: "Full Name",
-                          placeHolder: "Enter your name")
                 InputView(text: $password,
                           title: "Password",
                           placeHolder: "Enter your password",isSecureField: true)
-                InputView(text: $confirmPassword,
-                          title: "Confirm Password",
-                          placeHolder: "Confirm password",isSecureField: true)
                 
-                SignUpButton()
-                
-                Button {
-                    dismiss()
-                } label: {
+                SignInButton()
+                Spacer()
+                NavigationLink {
+                    SignUpView()
+                        .navigationBarBackButtonHidden(true)
+                }label: {
                     HStack {
-                        Text("Already have an account?")
-                        Text("Sign in")
+                        Text("Don't have an account?")
+                        Text("Sign up")
                             .fontWeight(.bold)
                     }
                     .foregroundColor(.white)
                     .font(.system(size: 14))
                 }
-                
             }
             .padding(.horizontal)
-            
+            .padding(.top,12)
         }
             
     }
-    }
-
-
-struct SignUpButton: View {
-    
+        
+}
+struct SignInButton: View {
     var body: some View {
         Button {
-            
+            print("Log user in...")
         } label: {
             HStack {
-                Text("SIGN UP")
+                Text("SIGN IN")
                     .fontWeight(.semibold)
                 Image(systemName: "arrow.right")
             }
@@ -77,9 +70,9 @@ struct SignUpButton: View {
 }
 
 
-
-struct SignUpView_Previews: PreviewProvider {
+struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignInView()
     }
 }
+

@@ -21,7 +21,7 @@ struct StaySafeView: View {
                 .padding(.leading, 30.0)
                 
                 NavigationLink {
-                    SignUpView()
+                    SignInView()
                 } label: {
                     ZStack {
                         Rectangle()
