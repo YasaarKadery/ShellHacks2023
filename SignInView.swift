@@ -55,6 +55,7 @@ struct SignInButton: View {
     let password: String
     @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
+        // sign in button
         Button {
             Task {
                 try await viewModel.signIn(withEmail: email, password: password)
@@ -70,12 +71,21 @@ struct SignInButton: View {
             .frame(width: UIScreen.main.bounds.width-32, height: 48)
         }
         .background(Color(.systemBlue))
+        .disabled(!formIsValid)
+        .opacity(formIsValid ? 1.0 : 0.5)
         .cornerRadius(10)
 
         }
 }
-
-
+// MARK: - AuthenticationFormProtocol
+extension SignInButton: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
+    }
+}
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
         SignInView()

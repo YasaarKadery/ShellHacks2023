@@ -33,7 +33,7 @@ struct SignUpView: View {
                           title: "Confirm Password",
                           placeHolder: "Confirm password",isSecureField: true)
                 
-                SignUpButton(email: email, fullname: fullname, password: password)
+                SignUpButton(email: email, fullname: fullname,  confirmPassword: confirmPassword,password: password)
                 
                 Button {
                     dismiss()
@@ -59,6 +59,7 @@ struct SignUpView: View {
 struct SignUpButton: View {
     let email: String
     let fullname: String
+    let confirmPassword: String
     let password: String
     @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
@@ -77,12 +78,26 @@ struct SignUpButton: View {
             .frame(width: UIScreen.main.bounds.width-32, height: 48)
         }
         .background(Color(.systemBlue))
+        .disabled(!formIsValid)
+        .opacity(formIsValid ? 1.0 : 0.5)
+
         .cornerRadius(10)
 
         }
 }
 
-
+// MARK: - AuthenticationFormProtocol
+extension SignUpButton: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
+        && confirmPassword == password
+        && !fullname.isEmpty
+        
+    }
+}
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
