@@ -17,9 +17,6 @@ from ast import literal_eval
 # # Regex pattern to match a URL
 HTTP_URL_PATTERN = r'^http[s]{0,1}://.+$'
 
-# # Define OpenAI api_key
-openai.api_key = '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'
-
 # # Define root domain to crawl
 domain = "www.iii.org"
 full_url = "https://www.iii.org/insurance-basics"

@@ -5,10 +5,14 @@ import os
 import numpy as np
 from openai.embeddings_utils import distances_from_embeddings, cosine_similarity
 from ast import literal_eval
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 domain = "www.iii.org"
 full_url = "https://www.iii.org/insurance-basics"
-openai.api_key = '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'
+openai.api_key = os.getenv('API_KEY')
 texts=[]
 def remove_newlines(serie):
     serie = serie.str.replace('\n', ' ')
@@ -111,9 +115,6 @@ df = pd.DataFrame(shortened, columns = ['text'])
 df['n_tokens'] = df.text.apply(lambda x: len(tokenizer.encode(x)))
 df.n_tokens.hist()
 
-
-# Note that you may run into rate limit issues depending on how many files you try to embed
-# Please check out our rate limit guide to learn more on how to handle this: https://platform.openai.com/docs/guides/rate-limits
 
 df['embeddings'] = df.text.apply(lambda x: openai.Embedding.create(input=x, engine='text-embedding-ada-002')['data'][0]['embedding'])
 df.to_csv('processed/embeddings.csv')

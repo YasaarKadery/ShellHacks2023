@@ -2,10 +2,14 @@
 import pandas as pd
 import openai
 import numpy as np
+import os
 from openai.embeddings_utils import distances_from_embeddings, cosine_similarity
 from ast import literal_eval
+from dotenv import load_dotenv
 
-openai.api_key = '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'
+
+load_dotenv()
+openai.api_key = os.getenv('API_KEY')
 df=pd.read_csv('processed/embeddings.csv', index_col=0)
 df['embeddings'] = df['embeddings'].apply(literal_eval).apply(np.array)
 df.head()
