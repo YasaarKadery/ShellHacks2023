@@ -21,11 +21,14 @@ struct InputView: View {
             
             if isSecureField {
                 SecureField(placeHolder, text: $text)
-                    .font((.system(size: 14)))
+                    .font((.system(size: 18)))
+                    .foregroundColor(.white)
             } else {
                 TextField(placeHolder, text: $text)
-                    .font((.system(size: 14)))
-                    .foregroundColor(.gray)
+                    .font((.system(size: 18)))
+                    .foregroundColor(.white)
+                    
+                    
                 
             }
             

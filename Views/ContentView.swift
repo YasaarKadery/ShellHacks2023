@@ -12,6 +12,7 @@ import MapKit
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
+        // Check if the user is logged in, if they aren't show the Onboarding screen, if they are, show the Home screen
         Group {
             if viewModel.userSession != nil {
                 HomeView()
