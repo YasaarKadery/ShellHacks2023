@@ -55,6 +55,7 @@ struct ChatView: View {
                                     .cornerRadius(10)
                                     .padding(.horizontal,16)
                                     .padding(.bottom,10)
+                                    .font(.system(size: 18))
                             }
                         } else {
                             HStack {
@@ -66,6 +67,7 @@ struct ChatView: View {
                                     .padding(.horizontal,16)
                                     .padding(.bottom,10)
                                     .foregroundColor(.white)
+                                    .font(.system(size: 18))
                                 Spacer()
                             }
 
