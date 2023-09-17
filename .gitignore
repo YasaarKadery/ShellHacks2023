@@ -2,3 +2,6 @@ Rubik/*
 Poppins/*
 *.plist
 *.env
+env/*
+processed/*
+text/*
