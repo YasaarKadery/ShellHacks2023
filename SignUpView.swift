@@ -33,7 +33,7 @@ struct SignUpView: View {
                           title: "Confirm Password",
                           placeHolder: "Confirm password",isSecureField: true)
                 
-                SignUpButton()
+                SignUpButton(email: email, fullname: fullname, password: password)
                 
                 Button {
                     dismiss()
@@ -57,9 +57,15 @@ struct SignUpView: View {
 
 
 struct SignUpButton: View {
-    
+    let email: String
+    let fullname: String
+    let password: String
+    @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
         Button {
+            Task {
+                try await viewModel.createUser(withEmail: email, password: password, fullname: fullname)
+            }
             
         } label: {
             HStack {

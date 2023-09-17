@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
         ZStack {
             Constants.Background.ignoresSafeArea()
+            if let user = viewModel.currentUser {
                 VStack {
                     Image("car with bg 1")
                     
@@ -24,7 +26,7 @@ struct DashboardView: View {
                       .kerning(0.14865)
                       .foregroundColor(.white)
                     
-                    Text("Drive Assistant")
+                    Text("Drive Assistant, \(user.fullname)")
                       .font(
                         Font.custom("Rubik", size: 32)
                           .weight(.bold)
@@ -54,11 +56,10 @@ struct DashboardView: View {
                         }
                         
                     }
-                    
-                
-               
-                
+
             }
+            }
+                
         }
      
     }

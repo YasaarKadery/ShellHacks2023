@@ -19,6 +19,10 @@ struct HomeView: View {
                     Label("Chat", systemImage: "message.fill")
                         
                 }
+            SettingsView()
+                .tabItem {
+                    Label("Settings",systemImage: "gear")
+                }
         }
     }
 }

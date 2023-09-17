@@ -28,7 +28,7 @@ struct SignInView: View {
                           title: "Password",
                           placeHolder: "Enter your password",isSecureField: true)
                 
-                SignInButton()
+                SignInButton(email: email, password: password)
                 Spacer()
                 NavigationLink {
                     SignUpView()
@@ -51,9 +51,15 @@ struct SignInView: View {
         
 }
 struct SignInButton: View {
+    let email: String
+    let password: String
+    @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
         Button {
-            print("Log user in...")
+            Task {
+                try await viewModel.signIn(withEmail: email, password: password)
+            }
+            
         } label: {
             HStack {
                 Text("SIGN IN")
